@@ -12,7 +12,7 @@ const createThumbnailPicture = ({url, likes, comments, id}) => {
   return thumbnailPicture;
 };
 
-const returnThumbnailPicture = (pictures) => {
+const renderThumbnailPictures = (pictures) => {
   const fragment = document.createDocumentFragment();
   pictures.forEach((picture) => {
     const thumbnailPicture = createThumbnailPicture(picture);
@@ -21,4 +21,4 @@ const returnThumbnailPicture = (pictures) => {
   containerPictures.append(fragment);
 };
 
-export {returnThumbnailPicture, containerPictures};
+export {renderThumbnailPictures, containerPictures};

@@ -1,5 +1,5 @@
 import {openBigPicture} from './big-picture.js';
-import {returnThumbnailPicture, containerPictures} from './thumbnail.js';
+import {renderThumbnailPictures, containerPictures} from './thumbnail.js';
 
 const renderPictureModale = (pictures) => {
   containerPictures.addEventListener('click', (evt) => {
@@ -12,7 +12,7 @@ const renderPictureModale = (pictures) => {
     );
     openBigPicture(picture);
   });
-  returnThumbnailPicture(pictures,containerPictures);
+  renderThumbnailPictures(pictures);
 };
 
 export {renderPictureModale};
