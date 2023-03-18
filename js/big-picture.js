@@ -12,6 +12,7 @@ const onEscape = document.addEventListener('keydown', (evt) => {
   if (isEscapeKey (evt)) {
     evt.preventDefault();
     bigPicture.classList.add('hidden');
+    body.classList.remove('modal-open');
   }
 });
 
