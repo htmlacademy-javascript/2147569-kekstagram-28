@@ -30,7 +30,7 @@ const DESCRIPTIONS = [
 const generateCommentId = createIdGenerator ();
 
 const createMessage = () =>
-  Array.from({length: getRandomInteger(1,2)}, () =>
+  Array.from({length: getRandomInteger(1,1.5)}, () =>
     getRandomArrayElement(COMMENTS)).join(' ');
 
 const createComment = () => ({
