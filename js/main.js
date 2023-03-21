@@ -1,5 +1,4 @@
 import {getPhotoDescription} from './data.js';
-getPhotoDescription();
+import {renderPictureModal} from './picture-modal.js';
 
-import {returnThumbnailPicture} from './thumbnail.js';
-returnThumbnailPicture(getPhotoDescription());
+renderPictureModal(getPhotoDescription());
