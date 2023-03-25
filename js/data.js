@@ -52,4 +52,3 @@ const getPhotoDescription = () => Array.from({length: 25},(_, photoIndex) => cre
 );
 
 export {getPhotoDescription};
-export {createPhotoDescription};
