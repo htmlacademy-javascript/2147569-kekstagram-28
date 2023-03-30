@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {resetScale, buttonScaleOn, buttonScaleOf} from './scaling.js';
 
 const formImageEdit = document.querySelector('.img-upload__form');
 const fieldImage = formImageEdit.querySelector('#upload-file');
@@ -24,6 +25,7 @@ const onEscapeOverlay = (evt) => {
     body.classList.remove('modal-open');
     formImageEdit.reset();
     pristine.reset();
+    resetScale();
   }
 };
 
@@ -94,6 +96,8 @@ const closeImageModal = () => {
   formImageEdit.reset();
   pristine.reset();
   modalFocusOff();
+  resetScale();
+  buttonScaleOf();
 };
 
 const openImageModal = () => {
@@ -102,6 +106,7 @@ const openImageModal = () => {
   document.addEventListener('keydown', onEscapeOverlay);
   buttonOverlayClose.addEventListener('click', closeImageModal);
   modalFocusOn();
+  buttonScaleOn();
 };
 
 const inputImageChange = () => {
