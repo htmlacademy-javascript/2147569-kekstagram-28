@@ -1,5 +1,7 @@
 import {isEscapeKey} from './util.js';
-import {resetScale, buttonScaleOn, buttonScaleOf} from './scaling.js';
+import {resetScale, buttonScaleOn, buttonScaleOf} from './scaling-image.js';
+import {resetEffects} from './effects.js';
+import './effects.js';
 
 const formImageEdit = document.querySelector('.img-upload__form');
 const fieldImage = formImageEdit.querySelector('#upload-file');
@@ -8,6 +10,7 @@ const buttonOverlayClose = formImageEdit.querySelector ('#upload-cancel');
 const body = document.querySelector('body');
 const fieldComments = formImageEdit.querySelector('.text__description');
 const fieldHashtags = formImageEdit.querySelector('.text__hashtags');
+
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TAG_TEXT = 'В заполнении хэштегов допущенны ошибки';
@@ -98,6 +101,7 @@ const closeImageModal = () => {
   modalFocusOff();
   resetScale();
   buttonScaleOf();
+  resetEffects();
 };
 
 const openImageModal = () => {
