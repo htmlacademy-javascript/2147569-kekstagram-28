@@ -1,8 +1,8 @@
 const imageUpload = document.querySelector('.img-upload__preview img');
 const effects = document.querySelector('.effects');
-const sliderEffect = document.querySelector('.effect-level__slider');
-const sliderEffectLevel = document.querySelector('.img-upload__effect-level');
-const effectLevelValue = document.querySelector('.effect-level__value');
+const effectSlider = document.querySelector('.effect-level__slider');
+const sliderWrapper = document.querySelector('.img-upload__effect-level');
+const effectLevel = document.querySelector('.effect-level__value');
 
 const EFFECTS = [
   {
@@ -60,15 +60,15 @@ let chosenEffect = DEFAULT_EFFECT;
 const isDefault = () => chosenEffect === DEFAULT_EFFECT;
 
 const openSlider = () => {
-  sliderEffectLevel.classList.remove('hidden');
+  sliderWrapper.classList.remove('hidden');
 };
 
 const closeSlider = () => {
-  sliderEffectLevel.classList.add('hidden');
+  sliderWrapper.classList.add('hidden');
 };
 
 const updateSlider = () => {
-  sliderEffect.noUiSlider.updateOptions(
+  effectSlider.noUiSlider.updateOptions(
     {
       range: {
         min: chosenEffect.min,
@@ -95,17 +95,18 @@ const effectsChange = (evt) => {
 };
 
 const onUpdateSlider = () => {
-  const sliderValue = sliderEffect.noUiSlider.get();
-  imageUpload.style.filter = isDefault() ? DEFAULT_EFFECT.style : `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
-  effectLevelValue.value = sliderValue;
+  const sliderValue = effectSlider.noUiSlider.get();
+
+  if (isDefault()) {
+    imageUpload.style.filter = DEFAULT_EFFECT.style;
+  } else {
+    imageUpload.style.filter = `${chosenEffect.style}(${sliderValue}${chosenEffect.unit})`;
+  }
+
+  effectLevel.value = sliderValue;
 };
 
-export const resetEffects = () => {
-  chosenEffect = DEFAULT_EFFECT;
-  updateSlider();
-};
-
-noUiSlider.create(sliderEffect, {
+noUiSlider.create(effectSlider, {
   range: {
     min: DEFAULT_EFFECT.min,
     max: DEFAULT_EFFECT.max
@@ -118,4 +119,9 @@ noUiSlider.create(sliderEffect, {
 closeSlider();
 
 effects.addEventListener('change', effectsChange);
-sliderEffect.noUiSlider.on('update', onUpdateSlider);
+effectSlider.noUiSlider.on('update', onUpdateSlider);
+
+export const resetEffects = () => {
+  chosenEffect = DEFAULT_EFFECT;
+  updateSlider();
+};
