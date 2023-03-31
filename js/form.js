@@ -1,12 +1,16 @@
 import {isEscapeKey} from './util.js';
+import {resetScale, buttonScaleOn, buttonScaleOf} from './scaling-image.js';
+import {resetEffects} from './effects.js';
+import './effects.js';
 
 const formImageEdit = document.querySelector('.img-upload__form');
-const fieldImage = formImageEdit.querySelector ('#upload-file');
-const overlayImage = formImageEdit.querySelector ('.img-upload__overlay');
+const fieldImage = formImageEdit.querySelector('#upload-file');
+const overlayImage = formImageEdit.querySelector('.img-upload__overlay');
 const buttonOverlayClose = formImageEdit.querySelector ('#upload-cancel');
 const body = document.querySelector('body');
-const fieldComments = formImageEdit.querySelector ('.text__description');
-const fieldHashtags = formImageEdit.querySelector ('.text__hashtags');
+const fieldComments = formImageEdit.querySelector('.text__description');
+const fieldHashtags = formImageEdit.querySelector('.text__hashtags');
+
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TAG_TEXT = 'В заполнении хэштегов допущенны ошибки';
@@ -24,27 +28,44 @@ const onEscapeOverlay = (evt) => {
     body.classList.remove('modal-open');
     formImageEdit.reset();
     pristine.reset();
+    resetScale();
   }
 };
 
-const fieldCommentsFocus = () => {
-  fieldComments.addEventListener('focus' ,() => {
+const fieldFocus = (field) => {
+  field.addEventListener('focus' ,() => {
     document.removeEventListener('keydown', onEscapeOverlay);
   });
-
-  fieldComments.addEventListener('blur' ,() => {
+};
+const fieldBlur = (field) => {
+  field.addEventListener('blur' ,() => {
     document.addEventListener('keydown', onEscapeOverlay);
   });
 };
 
-const fieldHashtagsFocus = () => {
-  fieldHashtags.addEventListener('focus' ,() => {
+const fieldFocusRemove = (field) => {
+  field.removeEventListener('focus' ,() => {
     document.removeEventListener('keydown', onEscapeOverlay);
   });
-
-  fieldHashtags.addEventListener('blur' ,() => {
+};
+const fieldBlurRemove = (field) => {
+  field.removeEventListener('blur' ,() => {
     document.addEventListener('keydown', onEscapeOverlay);
   });
+};
+
+const modalFocusOn = () => {
+  fieldFocus(fieldComments);
+  fieldBlur(fieldComments);
+  fieldFocus(fieldHashtags);
+  fieldBlur(fieldHashtags);
+};
+
+const modalFocusOff = () => {
+  fieldFocusRemove(fieldComments);
+  fieldBlurRemove(fieldComments);
+  fieldFocusRemove(fieldHashtags);
+  fieldBlurRemove(fieldHashtags);
 };
 
 const validHashtagCount = (tags) => tags.length <= MAX_HASHTAG_COUNT;
@@ -77,6 +98,10 @@ const closeImageModal = () => {
   buttonOverlayClose.removeEventListener('click', closeImageModal);
   formImageEdit.reset();
   pristine.reset();
+  modalFocusOff();
+  resetScale();
+  buttonScaleOf();
+  resetEffects();
 };
 
 const openImageModal = () => {
@@ -84,8 +109,8 @@ const openImageModal = () => {
   body.classList.add('modal-open');
   document.addEventListener('keydown', onEscapeOverlay);
   buttonOverlayClose.addEventListener('click', closeImageModal);
-  fieldCommentsFocus();
-  fieldHashtagsFocus();
+  modalFocusOn();
+  buttonScaleOn();
 };
 
 const inputImageChange = () => {
