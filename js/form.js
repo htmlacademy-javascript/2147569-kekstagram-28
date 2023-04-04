@@ -14,12 +14,39 @@ const fieldHashtags = formImageEdit.querySelector('.text__hashtags');
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TAG_TEXT = 'В заполнении хэштегов допущенны ошибки';
+const SubmitButtonText = {
+  IDLE: 'Сохранить',
+  SENDING: 'Сохраняю...'
+};
 
 const pristine = new Pristine(formImageEdit, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__error',
 });
+
+const blockSubmitButton = () => {
+  buttonOverlayClose.disabled = true;
+  buttonOverlayClose.textContent = SubmitButtonText.SENDING;
+};
+
+const unblockSubmitButton = () => {
+  buttonOverlayClose.disabled = false;
+  buttonOverlayClose.textContent = SubmitButtonText.IDLE;
+};
+
+export const setFormSubmit = (cb) => {
+  formImageEdit.addEventListener('submit', async (evt) => {
+    evt.preventDefault();
+
+    const isValid = pristine.validate();
+    if (isValid) {
+      blockSubmitButton();
+      await cb(new FormData(formImageEdit));
+      unblockSubmitButton();
+    }
+  });
+};
 
 const onEscapeOverlay = (evt) => {
   if (isEscapeKey (evt)) {
@@ -91,7 +118,7 @@ pristine.addValidator(
   ERROR_TAG_TEXT
 );
 
-const closeImageModal = () => {
+export const closeImageModal = () => {
   overlayImage.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeOverlay);
