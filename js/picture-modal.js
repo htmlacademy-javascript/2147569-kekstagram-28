@@ -1,18 +1,25 @@
 import {openBigPicture} from './big-picture.js';
 import {renderThumbnailPictures, containerPictures} from './thumbnail.js';
 
-const renderPictureModal = (pictures) => {
-  containerPictures.addEventListener('click', (evt) => {
-    const thumbnailPicture = evt.target.closest('[data-thumbnail-id]');
-    if (!thumbnailPicture) {
-      return;
-    }
-    const picture = pictures.find (
-      (item) => item.id === +thumbnailPicture.dataset.thumbnailId
-    );
-    openBigPicture(picture);
-  });
-  renderThumbnailPictures(pictures);
+let pictures = [];
+
+const modalClick = (evt) => {
+  const thumbnailPicture = evt.target.closest('[data-thumbnail-id]');
+  if (!thumbnailPicture) {
+    return;
+  }
+
+  evt.preventDefault();
+
+  const picture = pictures.find (
+    (item) => item.id === +thumbnailPicture.dataset.thumbnailId
+  );
+  openBigPicture(picture);
 };
 
-export {renderPictureModal};
+
+export const renderPictureModal = (currentPictures) => {
+  pictures = currentPictures;
+  renderThumbnailPictures(pictures);
+  containerPictures.addEventListener('click', modalClick);
+};
