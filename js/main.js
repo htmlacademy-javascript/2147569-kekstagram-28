@@ -1,10 +1,9 @@
 import {renderPictureModal} from './picture-modal.js';
-import './form.js';
 import {closeImageModal, setFormSubmit} from './form.js';
-import {showAlert} from './util.js';
+import {showAlert,debounce} from './util.js';
 import {getData, sendData} from './api.js';
 import {showErrorMessage,showSuccessMessage} from './messages-form.js';
-
+import {filteredPictures,init} from './filter.js';
 
 setFormSubmit (async (data) => {
   try {
@@ -18,7 +17,9 @@ setFormSubmit (async (data) => {
 
 try {
   const data = await getData();
-  renderPictureModal(data);
+  const debounceRenderPictureModal = debounce(renderPictureModal);
+  init(data,debounceRenderPictureModal);
+  renderPictureModal(filteredPictures());
 } catch (err) {
   showAlert(err.message);
 }
