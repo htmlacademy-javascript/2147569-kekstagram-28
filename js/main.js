@@ -1,4 +1,4 @@
-import {renderPictureModal} from './picture-modal.js';
+import {renderPictures} from './picture-modal.js';
 import {closeImageModal, setFormSubmit} from './form.js';
 import {showAlert,debounce} from './util.js';
 import {getData, sendData} from './api.js';
@@ -17,9 +17,9 @@ setFormSubmit (async (data) => {
 
 try {
   const data = await getData();
-  const debounceRenderPictureModal = debounce(renderPictureModal);
+  const debounceRenderPictureModal = debounce(renderPictures);
   init(data,debounceRenderPictureModal);
-  renderPictureModal(filteredPictures());
+  renderPictures(filteredPictures());
 } catch (err) {
   showAlert(err.message);
 }

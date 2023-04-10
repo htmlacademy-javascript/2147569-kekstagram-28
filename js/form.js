@@ -1,7 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {resetScale, buttonScaleOn, buttonScaleOf} from './scaling-image.js';
 import {resetEffects} from './effects.js';
-import './effects.js';
+import {loadUserPhoto} from './user-photo.js';
 
 const formImageEdit = document.querySelector('.img-upload__form');
 const fieldImage = formImageEdit.querySelector('#upload-file');
@@ -138,6 +138,7 @@ const openImageModal = () => {
   buttonOverlayClose.addEventListener('click', closeImageModal);
   modalFocusOn();
   buttonScaleOn();
+  loadUserPhoto();
 };
 
 const inputImageChange = () => {

@@ -3,7 +3,7 @@ import {renderThumbnailPictures, containerPictures} from './thumbnail.js';
 
 let pictures = [];
 
-const modalClick = (evt) => {
+const onClick = (evt) => {
   const thumbnailPicture = evt.target.closest('[data-thumbnail-id]');
   if (!thumbnailPicture) {
     return;
@@ -18,8 +18,8 @@ const modalClick = (evt) => {
 };
 
 
-export const renderPictureModal = (currentPictures) => {
+export const renderPictures = (currentPictures) => {
   pictures = currentPictures;
   renderThumbnailPictures(pictures);
-  containerPictures.addEventListener('click', modalClick);
+  containerPictures.addEventListener('click', onClick);
 };
