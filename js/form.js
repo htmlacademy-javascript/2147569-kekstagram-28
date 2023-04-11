@@ -7,6 +7,7 @@ const formImageEdit = document.querySelector('.img-upload__form');
 const fieldImage = formImageEdit.querySelector('#upload-file');
 const overlayImage = formImageEdit.querySelector('.img-upload__overlay');
 const buttonOverlayClose = formImageEdit.querySelector ('#upload-cancel');
+const buttonUploadSubmit = formImageEdit.querySelector ('#upload-submit');
 const body = document.querySelector('body');
 const fieldComments = formImageEdit.querySelector('.text__description');
 const fieldHashtags = formImageEdit.querySelector('.text__hashtags');
@@ -14,8 +15,8 @@ const fieldHashtags = formImageEdit.querySelector('.text__hashtags');
 const MAX_HASHTAG_COUNT = 5;
 const VALID_SYMBOLS = /^#[a-zа-яё0-9]{1,19}$/i;
 const ERROR_TAG_TEXT = 'В заполнении хэштегов допущенны ошибки';
-const SubmitButtonText = {
-  IDLE: 'Сохранить',
+const submitButtonText = {
+  IDLE: 'Опубликовать',
   SENDING: 'Сохраняю...'
 };
 
@@ -26,16 +27,16 @@ const pristine = new Pristine(formImageEdit, {
 });
 
 const blockSubmitButton = () => {
-  buttonOverlayClose.disabled = true;
-  buttonOverlayClose.textContent = SubmitButtonText.SENDING;
+  buttonUploadSubmit.disabled = true;
+  buttonUploadSubmit.textContent = submitButtonText.SENDING;
 };
 
 const unblockSubmitButton = () => {
-  buttonOverlayClose.disabled = false;
-  buttonOverlayClose.textContent = SubmitButtonText.IDLE;
+  buttonUploadSubmit.disabled = false;
+  buttonUploadSubmit.textContent = submitButtonText.IDLE;
 };
 
-export const setFormSubmit = (cb) => {
+export const formSubmit = (cb) => {
   formImageEdit.addEventListener('submit', async (evt) => {
     evt.preventDefault();
 
@@ -62,6 +63,7 @@ const onEscapeOverlay = (evt) => {
 const fieldFocus = (field) => {
   field.addEventListener('focus' ,() => {
     document.removeEventListener('keydown', onEscapeOverlay);
+    body.classList.add('modal-open');
   });
 };
 const fieldBlur = (field) => {
