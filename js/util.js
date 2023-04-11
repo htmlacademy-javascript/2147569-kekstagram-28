@@ -1,25 +1,6 @@
 const ALERT_SHOW_TIME = 5000;
 
-function getRandomInteger (min, max) {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-}
-
-const getRandomArrayElement = (array) => array[getRandomInteger(0,array.length - 1)];
-
-const createIdGenerator = () => {
-  let lastGenerateID = 0;
-
-  return () => {
-    lastGenerateID += 1;
-    return lastGenerateID;
-  };
-};
-
-const isEscapeKey = (evt) => evt.key === 'Escape';
+export const isEscapeKey = (evt) => evt.key === 'Escape';
 
 export const showAlert = (message) => {
   const alertContainer = document.createElement('div');
@@ -50,8 +31,3 @@ export function debounce (callback, timeoutDelay = 500) {
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
 }
-
-export {getRandomInteger};
-export {getRandomArrayElement};
-export {createIdGenerator};
-export {isEscapeKey};

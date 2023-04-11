@@ -22,7 +22,7 @@ export const showErrorMessage = () => {
   const message = messageError.cloneNode(true);
   message.querySelector('.error__button').addEventListener('click', closeErrorMessage);
   document.addEventListener('keydown', onEscapeError);
-  document.addEventListener('click', errorMouseClick, { once: true });
+  document.addEventListener('click', errorMouseClick);
   document.body.append(message);
 };
 
@@ -53,7 +53,7 @@ export const showSuccessMessage = () => {
   const message = messageSuccess.cloneNode(true);
   message.querySelector('.success__button').addEventListener('click', closeSuccessMessage);
   document.addEventListener('keydown', onEscapeSuccess);
-  document.addEventListener('click', successMouseClick, { once: true });
+  document.addEventListener('click', successMouseClick);
   document.body.append(message);
 };
 
