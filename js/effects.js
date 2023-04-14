@@ -1,5 +1,5 @@
 const imageUpload = document.querySelector('.img-upload__preview img');
-const effects = document.querySelector('.effects');
+const effectsChangeHandler = document.querySelector('.effects');
 const effectSlider = document.querySelector('.effect-level__slider');
 const sliderWrapper = document.querySelector('.img-upload__effect-level');
 const effectLevel = document.querySelector('.effect-level__value');
@@ -118,7 +118,7 @@ noUiSlider.create(effectSlider, {
 
 closeSlider();
 
-effects.addEventListener('change', effectsChange);
+effectsChangeHandler.addEventListener('change', effectsChange);
 effectSlider.noUiSlider.on('update', onUpdateSlider);
 
 export const resetEffects = () => {
