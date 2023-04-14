@@ -11,7 +11,7 @@ const closeErrorMessage = () => {
   }
 };
 
-const errorMouseClick = (evt) => {
+const onErrorClick = (evt) => {
   const errorContainer = document.querySelector('.error__inner');
   if (evt.target !== errorContainer) {
     closeErrorMessage();
@@ -22,7 +22,7 @@ export const showErrorMessage = () => {
   const message = messageError.cloneNode(true);
   message.querySelector('.error__button').addEventListener('click', closeErrorMessage);
   document.addEventListener('keydown', onEscapeError);
-  document.addEventListener('click', errorMouseClick);
+  document.addEventListener('click', onErrorClick);
   document.body.append(message);
 };
 
@@ -42,7 +42,7 @@ const closeSuccessMessage = () => {
   }
 };
 
-const successMouseClick = (evt) => {
+const onSuccessClick = (evt) => {
   const successContainer = document.querySelector('.success__inner');
   if (evt.target !== successContainer) {
     closeSuccessMessage();
@@ -53,7 +53,7 @@ export const showSuccessMessage = () => {
   const message = messageSuccess.cloneNode(true);
   message.querySelector('.success__button').addEventListener('click', closeSuccessMessage);
   document.addEventListener('keydown', onEscapeSuccess);
-  document.addEventListener('click', successMouseClick);
+  document.addEventListener('click', onSuccessClick);
   document.body.append(message);
 };
 

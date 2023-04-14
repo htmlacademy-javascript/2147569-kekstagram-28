@@ -1,6 +1,6 @@
 const imageUpload = document.querySelector('.img-upload__preview img');
-const buttonSmallerControl = document.querySelector('.scale__control--smaller');
-const buttonBiggerControl = document.querySelector('.scale__control--bigger');
+const onSmallerClick = document.querySelector('.scale__control--smaller');
+const onBiggerClick = document.querySelector('.scale__control--bigger');
 const buttonValueControl = document.querySelector('.scale__control--value');
 
 const STEP = 25;
@@ -32,13 +32,13 @@ const buttonBiggerClick = () => {
 };
 
 export const buttonScaleOn = () => {
-  buttonSmallerControl.addEventListener('click', buttonSmallerClick);
-  buttonBiggerControl.addEventListener('click', buttonBiggerClick);
+  onSmallerClick.addEventListener('click', buttonSmallerClick);
+  onBiggerClick.addEventListener('click', buttonBiggerClick);
 };
 
 export const buttonScaleOf = () => {
-  buttonSmallerControl.removeEventListener('click', buttonSmallerClick);
-  buttonBiggerControl.removeEventListener('click', buttonBiggerClick);
+  onSmallerClick.removeEventListener('click', buttonSmallerClick);
+  onBiggerClick.removeEventListener('click', buttonBiggerClick);
 };
 
 export const resetScale = () => imageScale(DEFAULT_VALUE);

@@ -5,8 +5,8 @@ const listComments = bigPicture.querySelector('.social__comments');
 const elementListCopy = listComments.querySelector('li').cloneNode(true);
 const body = document.querySelector('body');
 const commentCount = document.querySelector('.social__comment-count');
-const commentsLoader = document.querySelector('.comments-loader');
-const closeButton = bigPicture.querySelector('.big-picture__cancel');
+const onCommentsLoad = document.querySelector('.comments-loader');
+const onButtonClose = bigPicture.querySelector('.big-picture__cancel');
 let allComments;
 let commentsShow = 0;
 const COMMENTS_PORTION = 5;
@@ -43,9 +43,9 @@ const loadComments = () => {
   renderNewComments(nextComments);
 
   if (commentsShow >= allComments.length) {
-    commentsLoader.classList.add('hidden');
+    onCommentsLoad.classList.add('hidden');
   } else {
-    commentsLoader.classList.remove('hidden');
+    onCommentsLoad.classList.remove('hidden');
   }
 
   commentCount.innerHTML = `${commentsShow} из <span class="comments-count"> ${allComments.length}</span> комментариев`;
@@ -64,9 +64,9 @@ const renderBigPicture = ({url, likes, comments, description}) => {
 const closeBigPicture = () => {
   bigPicture.classList.add('hidden');
   body.classList.remove('modal-open');
-  closeButton.removeEventListener('click', closeBigPicture);
+  onButtonClose.removeEventListener('click', closeBigPicture);
   document.removeEventListener('keydown', onEscape);
-  commentsLoader.removeEventListener('click', loadComments);
+  onCommentsLoad.removeEventListener('click', loadComments);
   commentsShow = 0;
   allComments = [];
 };
@@ -74,9 +74,9 @@ const closeBigPicture = () => {
 export const openBigPicture = (picture) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
-  closeButton.addEventListener('click', closeBigPicture);
+  onButtonClose.addEventListener('click', closeBigPicture);
   document.addEventListener('keydown', onEscape);
-  commentsLoader.addEventListener('click', loadComments);
+  onCommentsLoad.addEventListener('click', loadComments);
 
   renderBigPicture(picture);
 };

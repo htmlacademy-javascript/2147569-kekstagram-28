@@ -6,7 +6,7 @@ import {loadUserPhoto} from './user-photo.js';
 const formImageEdit = document.querySelector('.img-upload__form');
 const fieldImage = formImageEdit.querySelector('#upload-file');
 const overlayImage = formImageEdit.querySelector('.img-upload__overlay');
-const buttonOverlayClose = formImageEdit.querySelector ('#upload-cancel');
+const overlayCloseHandler = formImageEdit.querySelector ('#upload-cancel');
 const buttonUploadSubmit = formImageEdit.querySelector ('#upload-submit');
 const body = document.querySelector('body');
 const fieldComments = formImageEdit.querySelector('.text__description');
@@ -57,6 +57,10 @@ const onEscapeOverlay = (evt) => {
     formImageEdit.reset();
     pristine.reset();
     resetScale();
+    resetEffects();
+    offFocusModal();
+    buttonScaleOf();
+    document.removeEventListener('keydown', onEscapeOverlay);
   }
 };
 
@@ -83,35 +87,35 @@ const fieldBlurRemove = (field) => {
   });
 };
 
-const modalFocusOn = () => {
+function onFocusModal () {
   fieldFocus(fieldComments);
   fieldBlur(fieldComments);
   fieldFocus(fieldHashtags);
   fieldBlur(fieldHashtags);
-};
+}
 
-const modalFocusOff = () => {
+function offFocusModal () {
   fieldFocusRemove(fieldComments);
   fieldBlurRemove(fieldComments);
   fieldFocusRemove(fieldHashtags);
   fieldBlurRemove(fieldHashtags);
-};
+}
 
-const validHashtagCount = (tags) => tags.length <= MAX_HASHTAG_COUNT;
+const getValidCount = (tags) => tags.length <= MAX_HASHTAG_COUNT;
 
-const uniqueHashtag = (tags) => {
+const getUniqueHashtag = (tags) => {
   const lowerCaseTags = tags.map((tag) => tag.toLowerCase());
   return lowerCaseTags.length === new Set(lowerCaseTags).size;
 };
 
-const validHashtag = (tag) => VALID_SYMBOLS.test(tag);
+const getValidHashtag = (tag) => VALID_SYMBOLS.test(tag);
 
 const isValidateTags = (value) => {
   const tags = value
     .trim()
     .split(' ')
     .filter((tag) => tag.trim().length);
-  return validHashtagCount(tags) && uniqueHashtag(tags) && tags.every(validHashtag);
+  return getValidCount(tags) && getUniqueHashtag(tags) && tags.every(getValidHashtag);
 };
 
 pristine.addValidator(
@@ -124,10 +128,10 @@ export const closeImageModal = () => {
   overlayImage.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onEscapeOverlay);
-  buttonOverlayClose.removeEventListener('click', closeImageModal);
+  overlayCloseHandler.removeEventListener('click', closeImageModal);
   formImageEdit.reset();
   pristine.reset();
-  modalFocusOff();
+  offFocusModal();
   resetScale();
   buttonScaleOf();
   resetEffects();
@@ -137,14 +141,14 @@ const openImageModal = () => {
   overlayImage.classList.remove('hidden');
   body.classList.add('modal-open');
   document.addEventListener('keydown', onEscapeOverlay);
-  buttonOverlayClose.addEventListener('click', closeImageModal);
-  modalFocusOn();
+  overlayCloseHandler.addEventListener('click', closeImageModal);
+  onFocusModal();
   buttonScaleOn();
   loadUserPhoto();
 };
 
-const inputImageChange = () => {
+const onChangeModal = () => {
   openImageModal();
 };
 
-fieldImage.addEventListener ('change', inputImageChange);
+fieldImage.addEventListener ('change', onChangeModal);
